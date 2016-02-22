@@ -37,11 +37,7 @@
 
 
 - (void)setupSubViews {
-    _submitButton = [SubmitButton creatSubmitButtonWithFrame:self.bounds];
-//    __weak __typeof(self) wself = self;
-////    _submitButton.didClickBlock = ^(UIButton *submitButton) {
-////        [wself submitBtnClick:submitButton];
-////    };
+    _submitButton = [SubmitButton creatSubmitButtonWithFrame:self.bounds]; 
     [_submitButton addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_submitButton addTarget:self action:@selector(buttonTouchDown) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_submitButton];
@@ -121,10 +117,6 @@
     
     UIBezierPath *progressCircle = [UIBezierPath bezierPath];
     [progressCircle addArcWithCenter:_viewCenter radius:self.bounds.size.height/2 startAngle:-M_PI_2 endAngle:M_PI_2 * 3 clockwise:YES];
-    //    [progressCircle moveToPoint:CGPointMake(center.x, center.y + 120)];
-    //    [progressCircle addQuadCurveToPoint:CGPointMake(center.x + 120, center.y) controlPoint:center];
-    //    [progressCircle addQuadCurveToPoint:CGPointMake(center.x, center.y + 120) controlPoint:center];
-    //    [progressCircle addQuadCurveToPoint:CGPointMake(center.x - 120, center.y) controlPoint:center];
     progressLayer.path = progressCircle.CGPath;
     [backProgressLayer addSublayer:progressLayer];
     
@@ -167,42 +159,6 @@
     anima.removedOnCompletion = NO;
     anima.fillMode = kCAFillModeForwards;
     [self.submitButton.layer addAnimation:anima forKey:nil];
-    
-    
-    
-    //    POPSpringAnimation *scaleAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
-    //    scaleAnim.springBounciness = 5;
-    //    scaleAnim.springSpeed = 12;
-    //    scaleAnim.toValue = [NSValue valueWithCGPoint:CGPointMake(0.3, 0.3)];
-    
-    //    POPSpringAnimation *boundsAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
-    //    boundsAnim.springBounciness = 10;
-    //    boundsAnim.springSpeed = 6;
-    //    boundsAnim.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, 100, 40)];
-    //
-    //    boundsAnim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
-    //        if (finished) {
-    //
-    //            UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
-    //            POPBasicAnimation *progressBoundsAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPShapeLayerStrokeEnd];
-    //            progressBoundsAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    //            progressBoundsAnim.duration = 1.0;
-    //            progressBoundsAnim.fromValue = @0.0;
-    //            progressBoundsAnim.toValue = @1.0;
-    //
-    ////            [progressLayer pop_addAnimation:progressBoundsAnim forKey:@"AnimateBounds"];
-    //            progressBoundsAnim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
-    //                if (finished) {
-    //                    UIGraphicsEndImageContext();
-    //                }
-    //            };
-    //
-    //
-    //        }
-    //    };
-    //    
-    //    [self.layer pop_addAnimation:boundsAnim forKey:@"AnimateBounds"];
-    //    [self.layer pop_addAnimation:scaleAnim forKey:@"AnimateScale"];
 }
 
 @end

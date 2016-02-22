@@ -10,13 +10,9 @@
 
 #define btnColor [UIColor colorWithRed:33.0/255.0 green:197.0/255.0 blue:131.0/255.0 alpha:1]
 #define changedBgColor [UIColor colorWithRed:172.0/255.0 green:172.0/255.0 blue:172.0/255.0 alpha:1]
-
-//typedef void(^didClickBlock) (UIButton *submitButton);
+ 
 
 @interface SubmitButton : UIButton
-
-//@property(nonatomic, copy) didClickBlock didClickBlock;
-//- (void)didClickBlock:(void (^)(SubmitButton *submitButton))block;
 
 + (instancetype)creatSubmitButtonWithFrame:(CGRect)frame;
 
