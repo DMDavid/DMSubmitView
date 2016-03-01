@@ -10,8 +10,11 @@
 
 #import "SubmitButton.h"
 #import "SubmitLabel.h"
+#import "ProgressView.h"
 
-@interface SubmitView ()
+#define url [NSURL URLWithString:@"http://image.baidu.com/search/down?tn=download&word=download&ie=utf8&fr=detail&url=http%3A%2F%2Fimgstore.cdn.sogou.com%2Fapp%2Fa%2F100540002%2Ficard_bg_10332.jpg"]
+
+@interface SubmitView () <ProgressViewDelegate>
 
 @property(nonatomic, strong) SubmitButton *submitButton;
 @property(nonatomic, strong) SubmitLabel *showLabel;
@@ -21,16 +24,15 @@
 
 @end
 
-@implementation SubmitView
-{
-    CAShapeLayer *backProgressLayer;
+@implementation SubmitView {
+    ProgressView *progress;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _originRect = self.bounds;
-        [self setupSubViews];
+        [self setupSubViews]; 
     }
     return self;
 }
@@ -60,7 +62,7 @@
         
     } completion:^(BOOL finished) {
         self.submitButton.hidden = YES;
-        [self drawProgressLayer]; 
+        [self drawProgressLayer];
     }];
 }
 
@@ -91,52 +93,19 @@
 - (void)drawProgressLayer {
     _viewCenter = (CGPoint){self.bounds.size.width/2, self.bounds.size.height/2};
     
-    //1. 背景环
-    backProgressLayer = [CAShapeLayer layer];
-    backProgressLayer.strokeColor = changedBgColor.CGColor;
-    backProgressLayer.fillColor = [UIColor whiteColor].CGColor;
-    backProgressLayer.lineCap   = kCALineCapRound;
-    backProgressLayer.lineJoin  = kCALineJoinBevel;
-    backProgressLayer.lineWidth = 2;
+    CGFloat layerWith = 3.0;
+    CGFloat progressRadius = self.bounds.size.height/2;
+    CGRect progressFrame = (CGRect){{self.bounds.size.width/2-progressRadius, 0}, {self.bounds.size.height + 2*layerWith, self.bounds.size.height + 2*layerWith}};
     
-    UIBezierPath *backProgressCircle = [UIBezierPath bezierPath];
-    [backProgressCircle addArcWithCenter:_viewCenter radius:self.bounds.size.height/2 startAngle:-M_PI_2 endAngle:M_PI_2 * 3 clockwise:YES];
-    backProgressLayer.path = backProgressCircle.CGPath;
-    [self.layer addSublayer:backProgressLayer];
-    
-    
-    //2. 圆环
-    CAShapeLayer *progressLayer = [CAShapeLayer layer];
-    progressLayer.strokeColor = btnColor.CGColor;
-    progressLayer.fillColor = [UIColor whiteColor].CGColor;
-    progressLayer.lineCap   = kCALineCapRound;
-    progressLayer.lineJoin  = kCALineJoinBevel;
-    progressLayer.lineWidth = 4.0;
-    progressLayer.strokeEnd = 0.0;
-    
-    UIBezierPath *progressCircle = [UIBezierPath bezierPath];
-    [progressCircle addArcWithCenter:_viewCenter radius:self.bounds.size.height/2 startAngle:-M_PI_2 endAngle:M_PI_2 * 3 clockwise:YES];
-    progressLayer.path = progressCircle.CGPath;
-    [backProgressLayer addSublayer:progressLayer];
-    
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 3.0;
-    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    pathAnimation.fromValue = [NSNumber numberWithFloat:0.0];
-    pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
-    pathAnimation.removedOnCompletion = NO;
-    pathAnimation.fillMode = kCAFillModeForwards;
-    [progressLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self expandLayerAnimation];
-    });
+    //创建一个进度环view
+    progress = [[ProgressView alloc] initWithURL:url progressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith delegate:self];
+    [self addSubview:progress];
 }
 
 
 //扩充动画
 - (void)expandLayerAnimation {
-    [backProgressLayer removeFromSuperlayer];
+    [progress removeFromSuperview];
     [_submitButton setShowSubmitButton];
     [_showLabel showLabelAnimation];
 
@@ -159,6 +128,23 @@
     anima.removedOnCompletion = NO;
     anima.fillMode = kCAFillModeForwards;
     [self.submitButton.layer addAnimation:anima forKey:nil];
+}
+
+
+#pragma mark - delegate
+- (void)progressView:(ProgressView *)progressView didFileWithError:(NSError *)error {
+    NSLog(@"错误---- %@",error);
+}
+
+- (void)progressViewUpdated:(ProgressView *)progressView {
+    NSLog(@"下载中");
+}
+
+- (void)progressView:(ProgressView *)progressView didFinishedWithSuggestedFileName:(NSString *)fileName {
+    NSLog(@"下载结束,文件地址: %@",fileName);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self expandLayerAnimation];
+    });
 }
 
 @end

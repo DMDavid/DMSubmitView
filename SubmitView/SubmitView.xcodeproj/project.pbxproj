@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630BA7241C8594A2008DDBC7 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630BA7231C8594A2008DDBC7 /* ProgressView.m */; };
 		635581A41C7AD31B0053FAFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581A31C7AD31B0053FAFE /* main.m */; };
 		635581A71C7AD31B0053FAFE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581A61C7AD31B0053FAFE /* AppDelegate.m */; };
 		635581AA1C7AD31B0053FAFE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581A91C7AD31B0053FAFE /* ViewController.m */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		630BA7221C8594A2008DDBC7 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		630BA7231C8594A2008DDBC7 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 		6355819F1C7AD31B0053FAFE /* SubmitView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubmitView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		635581A31C7AD31B0053FAFE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		635581A51C7AD31B0053FAFE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -153,6 +156,8 @@
 		635581D51C7AD3400053FAFE /* SubmitView */ = {
 			isa = PBXGroup;
 			children = (
+				630BA7221C8594A2008DDBC7 /* ProgressView.h */,
+				630BA7231C8594A2008DDBC7 /* ProgressView.m */,
 				635581D61C7AD3400053FAFE /* SubmitButton.h */,
 				635581D71C7AD3400053FAFE /* SubmitButton.m */,
 				635581D81C7AD3400053FAFE /* SubmitLabel.h */,
@@ -298,6 +303,7 @@
 				635581AA1C7AD31B0053FAFE /* ViewController.m in Sources */,
 				635581DC1C7AD3400053FAFE /* SubmitButton.m in Sources */,
 				635581A71C7AD31B0053FAFE /* AppDelegate.m in Sources */,
+				630BA7241C8594A2008DDBC7 /* ProgressView.m in Sources */,
 				635581A41C7AD31B0053FAFE /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +528,7 @@
 				635581CE1C7AD31B0053FAFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		635581CF1C7AD31B0053FAFE /* Build configuration list for PBXNativeTarget "SubmitViewTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +537,7 @@
 				635581D11C7AD31B0053FAFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		635581D21C7AD31B0053FAFE /* Build configuration list for PBXNativeTarget "SubmitViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +546,7 @@
 				635581D41C7AD31B0053FAFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
