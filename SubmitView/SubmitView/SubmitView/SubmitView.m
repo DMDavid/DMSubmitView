@@ -95,7 +95,9 @@
     
     CGFloat layerWith = 3.0;
     CGFloat progressRadius = self.bounds.size.height/2;
-    CGRect progressFrame = (CGRect){{self.bounds.size.width/2-progressRadius, 0}, {self.bounds.size.height + 2*layerWith, self.bounds.size.height + 2*layerWith}};
+    CGFloat progressX = self.bounds.size.width/2-progressRadius-layerWith;
+    CGFloat progressWH = self.bounds.size.height + 2*layerWith;
+    CGRect progressFrame = (CGRect){{progressX, -layerWith}, {progressWH, progressWH}};
     
     //创建一个进度环view
     progress = [[ProgressView alloc] initWithURL:url progressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith delegate:self];
