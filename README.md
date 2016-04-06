@@ -1,5 +1,5 @@
 # SubmitView
-This is an upload button effect implementation, mainly to provide design ideas, function to be perfect
+This is an upload button effect implementation, mainly to provide design ideas
 ## 下载进度中使用的是NSSession，可用AFN等网络框架替换实现。
 
 
