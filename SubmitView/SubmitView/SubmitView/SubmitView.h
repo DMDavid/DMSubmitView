@@ -11,4 +11,9 @@
 
 @interface SubmitView : UIView
 
+/**
+ *  设置下载地址
+ */
+- (void)setDownloadUrl:(NSString *)url;
+
 @end

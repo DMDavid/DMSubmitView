@@ -12,8 +12,6 @@
 #import "SubmitLabel.h"
 #import "ProgressView.h"
 
-#define url [NSURL URLWithString:@"http://image.baidu.com/search/down?tn=download&word=download&ie=utf8&fr=detail&url=http%3A%2F%2Fimgstore.cdn.sogou.com%2Fapp%2Fa%2F100540002%2Ficard_bg_10332.jpg"]
-
 @interface SubmitView () <ProgressViewDelegate>
 
 @property(nonatomic, strong) SubmitButton *submitButton;
@@ -22,10 +20,16 @@
 @property(nonatomic, assign) CGRect originRect;
 @property(nonatomic, assign) CGPoint viewCenter;
 
+@property (nonatomic, copy) NSString *downloadUrl;
+
 @end
 
 @implementation SubmitView {
     ProgressView *progress;
+}
+
+- (void)setDownLoadUrl:(NSString *)url {
+    self.downloadUrl = url;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -100,7 +104,7 @@
     CGRect progressFrame = (CGRect){{progressX, -layerWith}, {progressWH, progressWH}};
     
     //创建一个进度环view
-    progress = [[ProgressView alloc] initWithURL:url progressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith delegate:self];
+    progress = [[ProgressView alloc] initWithURL:[NSURL URLWithString:self.downloadUrl] progressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith delegate:self];
     [self addSubview:progress];
 }
 
