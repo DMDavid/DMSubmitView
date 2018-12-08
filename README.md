@@ -4,7 +4,7 @@
 
 ### CocoaPods
 
-1. Add `pod 'YYKit'` to your Podfile.
+1. Add `pod 'DMSubmitView'` to your Podfile.
 2. Run `pod install` or `pod update`.
 
 
