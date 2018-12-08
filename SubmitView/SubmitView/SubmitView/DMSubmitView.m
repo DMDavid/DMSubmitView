@@ -67,18 +67,19 @@
     //缩小动画
     [self scaleLayerAnimtaion];
     
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         //隐藏按钮
-        self.showLabel.alpha = 0;
-        [_submitButton setHiddenSubmitButton];
+        weakSelf.showLabel.alpha = 0;
+        [weakSelf.submitButton setHiddenSubmitButton];
         
     } completion:^(BOOL finished) {
-        self.submitButton.hidden = YES;
-        [self drawProgressLayer];
+        weakSelf.submitButton.hidden = YES;
+        [weakSelf drawProgressLayer];
         
         //call back
-        if (self.delegate && [self.delegate respondsToSelector:@selector(submitViewStartShowProgressViewStatus)]) {
-            [self.delegate submitViewStartShowProgressViewStatus];
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(submitViewStartShowProgressViewStatus)]) {
+            [weakSelf.delegate submitViewStartShowProgressViewStatus];
         }
     }];
 }
