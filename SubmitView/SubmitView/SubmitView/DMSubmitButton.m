@@ -6,12 +6,12 @@
 //  Copyright © 2016年 com.david. All rights reserved.
 //
 
-#import "SubmitButton.h"
+#import "DMSubmitButton.h"
 
-@implementation SubmitButton
+@implementation DMSubmitButton
 
 + (instancetype)creatSubmitButtonWithFrame:(CGRect)frame {
-    SubmitButton *submitBtn = [[SubmitButton alloc] initWithFrame:frame];
+    DMSubmitButton *submitBtn = [[DMSubmitButton alloc] initWithFrame:frame];
     return submitBtn;
 }
 

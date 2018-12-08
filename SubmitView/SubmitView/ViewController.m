@@ -8,11 +8,11 @@
 
 
 #import "ViewController.h"
-#import "SubmitView.h"
+#import "DMSubmitView.h"
 
-@interface ViewController () <SubmitViewDelegate>
+@interface ViewController () <DMSubmitViewDelegate>
 
-@property (nonatomic, strong) SubmitView *sub;
+@property (nonatomic, strong) DMSubmitView *sub;
 @property (nonatomic, strong) NSTimer *timer;
 
 @end
@@ -28,7 +28,7 @@
 }
 
 - (void)newSubmitView {
-    _sub = [[SubmitView alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
+    _sub = [[DMSubmitView alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
     _sub.center = self.view.center;
     _sub.delegate = self;
     [self.view addSubview:_sub];

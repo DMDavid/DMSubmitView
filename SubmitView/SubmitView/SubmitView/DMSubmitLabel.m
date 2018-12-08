@@ -6,12 +6,12 @@
 //  Copyright © 2016年 com.david. All rights reserved.
 //
 
-#import "SubmitLabel.h"
+#import "DMSubmitLabel.h"
 
-@implementation SubmitLabel
+@implementation DMSubmitLabel
 
 + (instancetype)creatSubmitLabelWithFrame:(CGRect)frame {
-    SubmitLabel *submitLabel = [[SubmitLabel alloc] initWithFrame:frame];
+    DMSubmitLabel *submitLabel = [[DMSubmitLabel alloc] initWithFrame:frame];
     return submitLabel;
 }
 

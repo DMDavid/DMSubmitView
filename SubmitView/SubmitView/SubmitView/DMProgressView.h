@@ -8,26 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ProgressViewDelegate <NSObject>
+@protocol DMProgressViewDelegate <NSObject>
 @optional
 // the progress circle is completion call back
 - (void)progressViewCompletionCallBack;
 
 @end
 
-@interface ProgressView : UIView
+@interface DMProgressView : UIView
 
 //line width
 @property(nonatomic, assign) CGFloat arcLineWith;
 
 //delegate
-@property (nonatomic, weak) id <ProgressViewDelegate> delegate;
+@property (nonatomic, weak) id <DMProgressViewDelegate> delegate;
 
 
 /*
  *  init
  */
-- (ProgressView *)initWithProgressViewWithFrame:(CGRect)frame
+- (DMProgressView *)initWithProgressViewWithFrame:(CGRect)frame
                                         timeout:(CGFloat)timeout
                                          radius:(CGFloat)radius
                                       layerWith:(CGFloat)layerWith;

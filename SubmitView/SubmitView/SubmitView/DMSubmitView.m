@@ -6,28 +6,28 @@
 //  Copyright © 2016年 com.david. All rights reserved.
 //
 
-#import "SubmitView.h"
+#import "DMSubmitView.h"
 
-#import "SubmitButton.h"
-#import "SubmitLabel.h"
-#import "ProgressView.h"
+#import "DMSubmitButton.h"
+#import "DMSubmitLabel.h"
+#import "DMProgressView.h"
 
-@interface SubmitView () <ProgressViewDelegate>
+@interface DMSubmitView () <DMProgressViewDelegate>
 
-@property(nonatomic, strong) SubmitButton *submitButton;
-@property(nonatomic, strong) SubmitLabel *showLabel;
+@property(nonatomic, strong) DMSubmitButton *submitButton;
+@property(nonatomic, strong) DMSubmitLabel *showLabel;
 
 @property(nonatomic, assign) CGRect originRect;
 @property(nonatomic, assign) CGPoint viewCenter;
 
-@property (nonatomic, strong) ProgressView *progress;
+@property (nonatomic, strong) DMProgressView *progress;
 
 @property (nonatomic, assign, readwrite) CGFloat currentProgressFloat;
 @property (nonatomic, assign, readwrite) CGFloat totalProgressFloat;
 
 @end
 
-@implementation SubmitView
+@implementation DMSubmitView
 
 - (void)updateProgressViewWitCurrenthData:(CGFloat)currentData totalData:(CGFloat)totalData {
     if (!_progress) {
@@ -50,12 +50,12 @@
 }
 
 - (void)setupSubViews {
-    _submitButton = [SubmitButton creatSubmitButtonWithFrame:self.bounds]; 
+    _submitButton = [DMSubmitButton creatSubmitButtonWithFrame:self.bounds];
     [_submitButton addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_submitButton addTarget:self action:@selector(buttonTouchDown) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_submitButton];
     
-    _showLabel = [[SubmitLabel alloc] initWithFrame:self.bounds];
+    _showLabel = [[DMSubmitLabel alloc] initWithFrame:self.bounds];
     [self addSubview:_showLabel];
 }
 
@@ -117,7 +117,7 @@
     CGRect progressFrame = (CGRect){{progressX, -layerWith}, {progressWH, progressWH}};
     
     //创建一个进度环view
-    self.progress = [[ProgressView alloc] initWithProgressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith];
+    self.progress = [[DMProgressView alloc] initWithProgressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith];
     self.progress.delegate = self;
     
     [self addSubview:self.progress];

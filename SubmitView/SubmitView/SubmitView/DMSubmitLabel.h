@@ -12,7 +12,7 @@
 #define defaultTextColor [UIColor whiteColor]
 #define textFont [UIFont systemFontOfSize:17];
 
-@interface SubmitLabel : UILabel
+@interface DMSubmitLabel : UILabel
 
 + (instancetype)creatSubmitLabelWithFrame:(CGRect)frame;
 - (void)touchDownAnimation;

@@ -12,7 +12,7 @@
 #define changedBgColor [UIColor colorWithRed:172.0/255.0 green:172.0/255.0 blue:172.0/255.0 alpha:1]
  
 
-@interface SubmitButton : UIButton
+@interface DMSubmitButton : UIButton
 
 + (instancetype)creatSubmitButtonWithFrame:(CGRect)frame;
 

@@ -6,9 +6,9 @@
 //  Copyright © 2016年 com.david. All rights reserved.
 //
 
-#import "ProgressView.h"
+#import "DMProgressView.h"
 
-@interface ProgressView()
+@interface DMProgressView()
 
 @property (nonatomic, assign) CGFloat number;
 @property (nonatomic, assign) CGFloat radius;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation ProgressView
+@implementation DMProgressView
 
 - (void)drawRect:(CGRect)rect
 {
@@ -49,7 +49,7 @@
     CGContextStrokePath(ctx);
 }
 
-- (ProgressView *)initWithProgressViewWithFrame:(CGRect)frame timeout:(CGFloat)timeout radius:(CGFloat)radius layerWith:(CGFloat)layerWith {
+- (DMProgressView *)initWithProgressViewWithFrame:(CGRect)frame timeout:(CGFloat)timeout radius:(CGFloat)radius layerWith:(CGFloat)layerWith {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];

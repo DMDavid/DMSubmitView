@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		630BA7241C8594A2008DDBC7 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630BA7231C8594A2008DDBC7 /* ProgressView.m */; };
+		630BA7241C8594A2008DDBC7 /* DMProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630BA7231C8594A2008DDBC7 /* DMProgressView.m */; };
 		635581A41C7AD31B0053FAFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581A31C7AD31B0053FAFE /* main.m */; };
 		635581A71C7AD31B0053FAFE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581A61C7AD31B0053FAFE /* AppDelegate.m */; };
 		635581AA1C7AD31B0053FAFE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581A91C7AD31B0053FAFE /* ViewController.m */; };
@@ -16,9 +16,9 @@
 		635581B21C7AD31B0053FAFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 635581B01C7AD31B0053FAFE /* LaunchScreen.storyboard */; };
 		635581BD1C7AD31B0053FAFE /* SubmitViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581BC1C7AD31B0053FAFE /* SubmitViewTests.m */; };
 		635581C81C7AD31B0053FAFE /* SubmitViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581C71C7AD31B0053FAFE /* SubmitViewUITests.m */; };
-		635581DC1C7AD3400053FAFE /* SubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581D71C7AD3400053FAFE /* SubmitButton.m */; };
-		635581DD1C7AD3400053FAFE /* SubmitLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581D91C7AD3400053FAFE /* SubmitLabel.m */; };
-		635581DE1C7AD3400053FAFE /* SubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581DB1C7AD3400053FAFE /* SubmitView.m */; };
+		635581DC1C7AD3400053FAFE /* DMSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581D71C7AD3400053FAFE /* DMSubmitButton.m */; };
+		635581DD1C7AD3400053FAFE /* DMSubmitLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581D91C7AD3400053FAFE /* DMSubmitLabel.m */; };
+		635581DE1C7AD3400053FAFE /* DMSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635581DB1C7AD3400053FAFE /* DMSubmitView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		630BA7221C8594A2008DDBC7 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
-		630BA7231C8594A2008DDBC7 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		630BA7221C8594A2008DDBC7 /* DMProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMProgressView.h; sourceTree = "<group>"; };
+		630BA7231C8594A2008DDBC7 /* DMProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMProgressView.m; sourceTree = "<group>"; };
 		6355819F1C7AD31B0053FAFE /* SubmitView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubmitView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		635581A31C7AD31B0053FAFE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		635581A51C7AD31B0053FAFE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -57,12 +57,12 @@
 		635581C31C7AD31B0053FAFE /* SubmitViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubmitViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		635581C71C7AD31B0053FAFE /* SubmitViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubmitViewUITests.m; sourceTree = "<group>"; };
 		635581C91C7AD31B0053FAFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		635581D61C7AD3400053FAFE /* SubmitButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitButton.h; sourceTree = "<group>"; };
-		635581D71C7AD3400053FAFE /* SubmitButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitButton.m; sourceTree = "<group>"; };
-		635581D81C7AD3400053FAFE /* SubmitLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitLabel.h; sourceTree = "<group>"; };
-		635581D91C7AD3400053FAFE /* SubmitLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitLabel.m; sourceTree = "<group>"; };
-		635581DA1C7AD3400053FAFE /* SubmitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitView.h; sourceTree = "<group>"; };
-		635581DB1C7AD3400053FAFE /* SubmitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitView.m; sourceTree = "<group>"; };
+		635581D61C7AD3400053FAFE /* DMSubmitButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSubmitButton.h; sourceTree = "<group>"; };
+		635581D71C7AD3400053FAFE /* DMSubmitButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSubmitButton.m; sourceTree = "<group>"; };
+		635581D81C7AD3400053FAFE /* DMSubmitLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSubmitLabel.h; sourceTree = "<group>"; };
+		635581D91C7AD3400053FAFE /* DMSubmitLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSubmitLabel.m; sourceTree = "<group>"; };
+		635581DA1C7AD3400053FAFE /* DMSubmitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSubmitView.h; sourceTree = "<group>"; };
+		635581DB1C7AD3400053FAFE /* DMSubmitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSubmitView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,14 +156,14 @@
 		635581D51C7AD3400053FAFE /* SubmitView */ = {
 			isa = PBXGroup;
 			children = (
-				630BA7221C8594A2008DDBC7 /* ProgressView.h */,
-				630BA7231C8594A2008DDBC7 /* ProgressView.m */,
-				635581D61C7AD3400053FAFE /* SubmitButton.h */,
-				635581D71C7AD3400053FAFE /* SubmitButton.m */,
-				635581D81C7AD3400053FAFE /* SubmitLabel.h */,
-				635581D91C7AD3400053FAFE /* SubmitLabel.m */,
-				635581DA1C7AD3400053FAFE /* SubmitView.h */,
-				635581DB1C7AD3400053FAFE /* SubmitView.m */,
+				630BA7221C8594A2008DDBC7 /* DMProgressView.h */,
+				630BA7231C8594A2008DDBC7 /* DMProgressView.m */,
+				635581D61C7AD3400053FAFE /* DMSubmitButton.h */,
+				635581D71C7AD3400053FAFE /* DMSubmitButton.m */,
+				635581D81C7AD3400053FAFE /* DMSubmitLabel.h */,
+				635581D91C7AD3400053FAFE /* DMSubmitLabel.m */,
+				635581DA1C7AD3400053FAFE /* DMSubmitView.h */,
+				635581DB1C7AD3400053FAFE /* DMSubmitView.m */,
 			);
 			path = SubmitView;
 			sourceTree = "<group>";
@@ -298,12 +298,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				635581DE1C7AD3400053FAFE /* SubmitView.m in Sources */,
-				635581DD1C7AD3400053FAFE /* SubmitLabel.m in Sources */,
+				635581DE1C7AD3400053FAFE /* DMSubmitView.m in Sources */,
+				635581DD1C7AD3400053FAFE /* DMSubmitLabel.m in Sources */,
 				635581AA1C7AD31B0053FAFE /* ViewController.m in Sources */,
-				635581DC1C7AD3400053FAFE /* SubmitButton.m in Sources */,
+				635581DC1C7AD3400053FAFE /* DMSubmitButton.m in Sources */,
 				635581A71C7AD31B0053FAFE /* AppDelegate.m in Sources */,
-				630BA7241C8594A2008DDBC7 /* ProgressView.m in Sources */,
+				630BA7241C8594A2008DDBC7 /* DMProgressView.m in Sources */,
 				635581A41C7AD31B0053FAFE /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol SubmitViewDelegate <NSObject>
+@protocol DMSubmitViewDelegate <NSObject>
 @optional
 //the view is start show progress view call back
 - (void)submitViewStartShowProgressViewStatus;
 
 @end
 
-@interface SubmitView : UIView
+@interface DMSubmitView : UIView
 
 //delegaet
-@property (nonatomic, weak) id <SubmitViewDelegate> delegate;
+@property (nonatomic, weak) id <DMSubmitViewDelegate> delegate;
 
 //current progress float
 @property (nonatomic, assign, readonly) CGFloat currentProgressFloat;
