@@ -20,16 +20,24 @@
 @property(nonatomic, assign) CGRect originRect;
 @property(nonatomic, assign) CGPoint viewCenter;
 
-@property (nonatomic, copy) NSString *downloadUrl;
+@property (nonatomic, strong) ProgressView *progress;
+
+@property (nonatomic, assign, readwrite) CGFloat currentProgressFloat;
+@property (nonatomic, assign, readwrite) CGFloat totalProgressFloat;
 
 @end
 
-@implementation SubmitView {
-    ProgressView *progress;
-}
+@implementation SubmitView
 
-- (void)setDownLoadUrl:(NSString *)url {
-    self.downloadUrl = url;
+- (void)updateProgressViewWitCurrenthData:(CGFloat)currentData totalData:(CGFloat)totalData {
+    if (!_progress) {
+        return;
+    }
+    
+    self.currentProgressFloat = currentData;
+    self.totalProgressFloat = totalData;
+    
+    [_progress updateProgressViewWitCurrenthData:currentData totalData:totalData];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -67,6 +75,11 @@
     } completion:^(BOOL finished) {
         self.submitButton.hidden = YES;
         [self drawProgressLayer];
+        
+        //call back
+        if (self.delegate && [self.delegate respondsToSelector:@selector(submitViewStartShowProgressViewStatus)]) {
+            [self.delegate submitViewStartShowProgressViewStatus];
+        }
     }];
 }
 
@@ -104,14 +117,16 @@
     CGRect progressFrame = (CGRect){{progressX, -layerWith}, {progressWH, progressWH}};
     
     //创建一个进度环view
-    progress = [[ProgressView alloc] initWithURL:[NSURL URLWithString:self.downloadUrl] progressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith delegate:self];
-    [self addSubview:progress];
+    self.progress = [[ProgressView alloc] initWithProgressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith];
+    self.progress.delegate = self;
+    
+    [self addSubview:self.progress];
 }
 
 
 //扩充动画
 - (void)expandLayerAnimation {
-    [progress removeFromSuperview];
+    [_progress removeFromSuperview];
     [_submitButton setShowSubmitButton];
     [_showLabel showLabelAnimation];
 
@@ -137,20 +152,10 @@
 }
 
 
-#pragma mark - delegate
-- (void)progressView:(ProgressView *)progressView didFileWithError:(NSError *)error {
-    NSLog(@"错误---- %@",error);
-}
+#pragma mark - ProgressViewDelegate
 
-- (void)progressViewUpdated:(ProgressView *)progressView {
-    NSLog(@"下载中");
-}
-
-- (void)progressView:(ProgressView *)progressView didFinishedWithSuggestedFileName:(NSString *)fileName {
-    NSLog(@"下载结束,文件地址: %@",fileName);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self expandLayerAnimation];
-    });
+- (void)progressViewCompletionCallBack {
+    [self expandLayerAnimation];
 }
 
 @end

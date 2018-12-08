@@ -8,12 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SubmitViewDelegate <NSObject>
+@optional
+//the view is start show progress view call back
+- (void)submitViewStartShowProgressViewStatus;
+
+@end
 
 @interface SubmitView : UIView
 
-/**
- *  设置下载地址
- */
-- (void)setDownloadUrl:(NSString *)url;
+//delegaet
+@property (nonatomic, weak) id <SubmitViewDelegate> delegate;
+
+//current progress float
+@property (nonatomic, assign, readonly) CGFloat currentProgressFloat;
+
+//current total float
+@property (nonatomic, assign, readonly) CGFloat totalProgressFloat;
+
+//update pregress view
+//更新进度
+- (void)updateProgressViewWitCurrenthData:(CGFloat)currentData totalData:(CGFloat)totalData;
 
 @end

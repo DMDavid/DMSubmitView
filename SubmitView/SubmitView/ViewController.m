@@ -10,35 +10,57 @@
 #import "ViewController.h"
 #import "SubmitView.h"
 
-@interface ViewController ()
+@interface ViewController () <SubmitViewDelegate>
+
+@property (nonatomic, strong) SubmitView *sub;
+@property (nonatomic, strong) NSTimer *timer;
 
 @end
 
 @implementation ViewController{
-    SubmitView *sub;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self newSubmitView];
+    
 }
 
 - (void)newSubmitView {
-    sub = [[SubmitView alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
-    [sub setDownloadUrl:@"https://avatars1.githubusercontent.com/u/12080954?v=3&s=460"];
-    sub.center = self.view.center;
-    [self.view addSubview:sub];
+    _sub = [[SubmitView alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
+    _sub.center = self.view.center;
+    _sub.delegate = self;
+    [self.view addSubview:_sub];
 }
 
 - (IBAction)click:(id)sender {
-    [sub removeFromSuperview];
+    [_sub removeFromSuperview];
     [self newSubmitView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark -
+
+- (void)submitViewStartShowProgressViewStatus {
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(updateAction) userInfo:nil repeats:YES];
+    [_timer fire];
+}
+
+static float currentCount = 0.0;
+
+- (void)updateAction {
+    
+    float totalCount = 10.0;
+    
+    if (currentCount > totalCount) {
+        [_timer invalidate];
+        _timer = nil;
+        return;
+    }
+    
+    [self.sub updateProgressViewWitCurrenthData:currentCount totalData:totalCount];
+    
+    currentCount++;
 }
 
 @end

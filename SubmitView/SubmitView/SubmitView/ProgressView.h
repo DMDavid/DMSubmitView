@@ -8,33 +8,34 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ProgressViewDelegate;
-
-@interface ProgressView : UIView
-
-@property (nonatomic,retain) NSURLRequest *request;
-@property (nonatomic,retain) NSURLSession *session;
-//下载的文件名字
-@property (nonatomic, copy) NSString *fileName;
-@property (nonatomic, assign) CGFloat number;
-@property (nonatomic, assign) CGFloat radius;
-@property(nonatomic, assign) CGFloat arcLineWith;
-@property (nonatomic, weak)   id <ProgressViewDelegate> delegate;
-
-- (ProgressView *)initWithURL:(NSURL *)fileURL progressViewWithFrame:(CGRect)frame timeout:(CGFloat)timeout radius:(CGFloat)radius layerWith:(CGFloat)layerWith delegate:(id <ProgressViewDelegate>)theDlegate;
+@protocol ProgressViewDelegate <NSObject>
+@optional
+// the progress circle is completion call back
+- (void)progressViewCompletionCallBack;
 
 @end
 
+@interface ProgressView : UIView
 
-@protocol ProgressViewDelegate <NSObject>
+//line width
+@property(nonatomic, assign) CGFloat arcLineWith;
 
-//下载错误
-- (void)progressView:(ProgressView *)progressView didFileWithError:(NSError *)error;
+//delegate
+@property (nonatomic, weak) id <ProgressViewDelegate> delegate;
 
-//下载完成
-- (void)progressView:(ProgressView *)progressView didFinishedWithSuggestedFileName:(NSString *)fileName;
 
-//下载中
-- (void)progressViewUpdated:(ProgressView *)progressView;
+/*
+ *  init
+ */
+- (ProgressView *)initWithProgressViewWithFrame:(CGRect)frame
+                                        timeout:(CGFloat)timeout
+                                         radius:(CGFloat)radius
+                                      layerWith:(CGFloat)layerWith;
+
+/*
+ *  更新进度
+ */
+- (void)updateProgressViewWitCurrenthData:(CGFloat)currentData totalData:(CGFloat)totalData;
+
 
 @end
