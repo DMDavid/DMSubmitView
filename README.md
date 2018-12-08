@@ -2,6 +2,11 @@
 
 ## A submit progress Hud view
 
+### CocoaPods
+
+1. Add `pod 'YYKit'` to your Podfile.
+2. Run `pod install` or `pod update`.
+
 
 rendering:
 效果图:
