@@ -30,4 +30,12 @@
 //更新进度
 - (void)updateProgressViewWitCurrenthData:(CGFloat)currentData totalData:(CGFloat)totalData;
 
+//setup show
+- (void)setupSubmitViewTitle:(NSString *)title;
+
+- (void)setupSubmitViewFont:(UIFont *)font;
+
+- (void)setupSubmitViewTextColor:(UIColor *)textColor;
+
+
 @end

@@ -25,6 +25,7 @@
     
     [self newSubmitView];
     
+    [self.sub setupSubmitViewTitle:@"提交"];
 }
 
 - (void)newSubmitView {

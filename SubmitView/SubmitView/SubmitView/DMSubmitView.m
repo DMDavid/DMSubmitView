@@ -49,6 +49,19 @@
     return self;
 }
 
+
+- (void)setupSubmitViewTitle:(NSString *)title {
+    _showLabel.text = title;
+}
+
+- (void)setupSubmitViewFont:(UIFont *)font {
+    _showLabel.font = font;
+}
+
+- (void)setupSubmitViewTextColor:(UIColor *)textColor {
+    _showLabel.textColor = textColor;
+}
+
 - (void)setupSubViews {
     _submitButton = [DMSubmitButton creatSubmitButtonWithFrame:self.bounds];
     [_submitButton addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
