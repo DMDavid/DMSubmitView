@@ -1,4 +1,6 @@
 # SubmitView
+
+## for loading hud view,  show progress view
 This is an upload button effect implementation, mainly to provide design ideas
 ## 一个下载loading 视图
 
