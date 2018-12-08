@@ -11,6 +11,7 @@ rendering:
 ## How to use
 
 1. init view
+
         _sub = [[SubmitView alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
         _sub.center = self.view.center;
         _sub.delegate = self;
@@ -50,7 +51,9 @@ rendering:
          
          
 ## ProgressView
-== also you can use circle progress for your porject ==
+
+* also you can use circle progress for your porject *
+
 
           @protocol ProgressViewDelegate <NSObject>
           @optional
