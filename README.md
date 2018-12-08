@@ -52,7 +52,7 @@ rendering:
          
 ## ProgressView
 
-* also you can use circle progress for your porject *
+* also you can use circle progress for your porject 
 
 
           @protocol ProgressViewDelegate <NSObject>
