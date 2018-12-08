@@ -8,7 +8,7 @@
 2. Run `pod install` or `pod update`.
 
 
-rendering:
+## rendering:
 效果图:
  ![image](https://github.com/DMDavid/SubmitView/blob/master/SubmitView/rendering.gif)
 
