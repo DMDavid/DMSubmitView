@@ -1,6 +1,6 @@
 # SubmitView
 
-## A progress Hud view
+## A submit progress Hud view
 
 
 rendering:
