@@ -8,16 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-#define btnColor [UIColor colorWithRed:33.0/255.0 green:197.0/255.0 blue:131.0/255.0 alpha:1]
-#define changedBgColor [UIColor colorWithRed:172.0/255.0 green:172.0/255.0 blue:172.0/255.0 alpha:1]
- 
 
 @interface DMSubmitButton : UIButton
 
+//init mothod
 + (instancetype)creatSubmitButtonWithFrame:(CGRect)frame;
 
+//set button color
+- (void)setupSubmitButtonColor:(UIColor *)buttonColor;
+
+//set button bold color
+- (void)setupSubmitButtonBoldColor:(UIColor *)buttonBlodColor;
+
+//hidden submitButton
 - (void)setHiddenSubmitButton;
 
+//show submitButton
 - (void)setShowSubmitButton;
 
 @end

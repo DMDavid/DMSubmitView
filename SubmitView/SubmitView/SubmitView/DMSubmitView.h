@@ -13,6 +13,9 @@
 //the view is start show progress view call back
 - (void)submitViewStartShowProgressViewStatus;
 
+//submit button Did Click
+- (void)submitViewButtonDidClick;
+
 @end
 
 @interface DMSubmitView : UIView
@@ -33,9 +36,18 @@
 //setup show
 - (void)setupSubmitViewTitle:(NSString *)title;
 
+//setup label font
 - (void)setupSubmitViewFont:(UIFont *)font;
 
+//setup label text color
 - (void)setupSubmitViewTextColor:(UIColor *)textColor;
 
+//setup subview button color,
+//default is [UIColor colorWithRed:33.0/255.0 green:197.0/255.0 blue:131.0/255.0 alpha:1]
+- (void)setupSubmitViewButtonColor:(UIColor *)buttonColor;
+
+//setup subview button blod color,
+//default is [UIColor colorWithRed:172.0/255.0 green:172.0/255.0 blue:172.0/255.0 alpha:1]
+- (void)setupSubmitViewButtonBlodColor:(UIColor *)blodColor;
 
 @end

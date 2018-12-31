@@ -8,7 +8,10 @@
 
 #import "DMSubmitButton.h"
 
-@implementation DMSubmitButton
+@implementation DMSubmitButton {
+    UIColor *_buttonColor;
+    UIColor *_blodColor;
+}
 
 + (instancetype)creatSubmitButtonWithFrame:(CGRect)frame {
     DMSubmitButton *submitBtn = [[DMSubmitButton alloc] initWithFrame:frame];
@@ -18,23 +21,34 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = btnColor;
+        self.backgroundColor = _buttonColor;
         self.layer.cornerRadius = self.bounds.size.height/2;;
         self.layer.masksToBounds = YES;
     }
     return self;
 }
 
+- (void)setupSubmitButtonColor:(UIColor *)buttonColor {
+    _buttonColor = buttonColor;
+    self.backgroundColor = _buttonColor;
+}
+
+- (void)setupSubmitButtonBoldColor:(UIColor *)buttonBlodColor {
+    _blodColor = buttonBlodColor;
+    self.layer.borderColor = _blodColor.CGColor;
+}
+
 - (void)setHiddenSubmitButton {
     self.backgroundColor = [UIColor whiteColor];
     self.layer.borderWidth = 2;
-    self.layer.borderColor = changedBgColor.CGColor;
+    self.layer.borderColor = _blodColor.CGColor;
 }
 
 - (void)setShowSubmitButton {
     self.hidden = NO;
-    self.backgroundColor = btnColor;
+    self.backgroundColor = _buttonColor;
     self.layer.borderWidth = 0;
 }
 
 @end
+

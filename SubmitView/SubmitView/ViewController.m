@@ -33,16 +33,23 @@
     _sub.center = self.view.center;
     _sub.delegate = self;
     [self.view addSubview:_sub];
+    
+    //    [_sub setupSubmitViewButtonColor:[UIColor redColor]];
 }
 
 - (IBAction)click:(id)sender {
     [_sub removeFromSuperview];
+    _sub = nil;
     [self newSubmitView];
 }
 
 #pragma mark -
 
 - (void)submitViewStartShowProgressViewStatus {
+    float totalCount = 10.0;
+    if (currentCount > totalCount) {
+        currentCount = 0.0;
+    }
     _timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(updateAction) userInfo:nil repeats:YES];
     [_timer fire];
 }

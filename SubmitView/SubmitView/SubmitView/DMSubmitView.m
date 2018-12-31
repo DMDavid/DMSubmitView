@@ -12,6 +12,9 @@
 #import "DMSubmitLabel.h"
 #import "DMProgressView.h"
 
+#define btnColor [UIColor colorWithRed:33.0/255.0 green:197.0/255.0 blue:131.0/255.0 alpha:1]
+#define changedBgColor [UIColor colorWithRed:172.0/255.0 green:172.0/255.0 blue:172.0/255.0 alpha:1]
+
 @interface DMSubmitView () <DMProgressViewDelegate>
 
 @property(nonatomic, strong) DMSubmitButton *submitButton;
@@ -21,6 +24,9 @@
 @property(nonatomic, assign) CGPoint viewCenter;
 
 @property (nonatomic, strong) DMProgressView *progress;
+
+@property (nonatomic, strong) UIColor *submitButtonColor;
+@property (nonatomic, strong) UIColor *submitBlodColor;
 
 @property (nonatomic, assign, readwrite) CGFloat currentProgressFloat;
 @property (nonatomic, assign, readwrite) CGFloat totalProgressFloat;
@@ -44,26 +50,15 @@
     self = [super initWithFrame:frame];
     if (self) {
         _originRect = self.bounds;
-        [self setupSubViews]; 
+        [self setupSubViews];
     }
     return self;
 }
 
-
-- (void)setupSubmitViewTitle:(NSString *)title {
-    _showLabel.text = title;
-}
-
-- (void)setupSubmitViewFont:(UIFont *)font {
-    _showLabel.font = font;
-}
-
-- (void)setupSubmitViewTextColor:(UIColor *)textColor {
-    _showLabel.textColor = textColor;
-}
-
 - (void)setupSubViews {
     _submitButton = [DMSubmitButton creatSubmitButtonWithFrame:self.bounds];
+    [_submitButton setupSubmitButtonColor:self.submitButtonColor];
+    [_submitButton setupSubmitButtonBoldColor:self.submitBlodColor];
     [_submitButton addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [_submitButton addTarget:self action:@selector(buttonTouchDown) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_submitButton];
@@ -74,9 +69,10 @@
 
 - (void)buttonTouchDown {
     [_showLabel touchDownAnimation];
-} 
+}
 
 - (void)submitBtnClick:(UIButton *)submitBtn {
+    
     //缩小动画
     [self scaleLayerAnimtaion];
     
@@ -143,7 +139,7 @@
     [_progress removeFromSuperview];
     [_submitButton setShowSubmitButton];
     [_showLabel showLabelAnimation];
-
+    
     CABasicAnimation *anima = [CABasicAnimation animation];
     anima.duration = 1.;
     anima.keyPath = @"bounds";
@@ -166,10 +162,52 @@
 }
 
 
+#pragma mark - Private mothods
+
+- (void)setupSubmitViewTitle:(NSString *)title {
+    _showLabel.text = title;
+}
+
+- (void)setupSubmitViewFont:(UIFont *)font {
+    _showLabel.font = font;
+}
+
+- (void)setupSubmitViewTextColor:(UIColor *)textColor {
+    _showLabel.textColor = textColor;
+}
+
+- (void)setupSubmitViewButtonColor:(UIColor *)buttonColor {
+    _submitButtonColor = buttonColor;
+    [_submitButton setupSubmitButtonColor:buttonColor];
+}
+
+- (void)setupSubmitViewButtonBlodColor:(UIColor *)blodColor {
+    _submitBlodColor = blodColor;
+    [_submitButton setupSubmitButtonBoldColor:blodColor];
+}
+
+
 #pragma mark - ProgressViewDelegate
 
 - (void)progressViewCompletionCallBack {
     [self expandLayerAnimation];
+}
+
+
+#pragma mark - Getter
+
+- (UIColor *)submitButtonColor {
+    if (!_submitButtonColor) {
+        _submitButtonColor = btnColor;
+    }
+    return _submitButtonColor;
+}
+
+- (UIColor *)submitBlodColor {
+    if (!_submitBlodColor) {
+        _submitBlodColor = changedBgColor;
+    }
+    return _submitBlodColor;
 }
 
 @end
