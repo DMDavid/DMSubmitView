@@ -1,159 +1,292 @@
 //
-//  SubmitView.m
-//  SubmitAnimation
+//  DMSubmitView.m
+//  SubmitView
 //
 //  Created by David on 16/2/19.
 //  Copyright © 2016年 com.david. All rights reserved.
 //
 
 #import "DMSubmitView.h"
-
 #import "DMSubmitButton.h"
 #import "DMSubmitLabel.h"
 #import "DMProgressView.h"
 
-#define btnColor [UIColor colorWithRed:33.0/255.0 green:197.0/255.0 blue:131.0/255.0 alpha:1]
-#define changedBgColor [UIColor colorWithRed:172.0/255.0 green:172.0/255.0 blue:172.0/255.0 alpha:1]
-
 @interface DMSubmitView () <DMProgressViewDelegate>
 
-@property(nonatomic, strong) DMSubmitButton *submitButton;
-@property(nonatomic, strong) DMSubmitLabel *showLabel;
+@property (nonatomic, strong) DMSubmitButton *submitButton;
+@property (nonatomic, strong) DMSubmitLabel *showLabel;
+@property (nonatomic, strong) DMProgressView *progressView;
 
-@property(nonatomic, assign) CGRect originRect;
-@property(nonatomic, assign) CGPoint viewCenter;
-
-@property (nonatomic, strong) DMProgressView *progress;
-
-@property (nonatomic, strong) UIColor *submitButtonColor;
-@property (nonatomic, strong) UIColor *submitBlodColor;
+@property (nonatomic, assign) CGRect originRect;
+@property (nonatomic, assign) CGPoint viewCenter;
 
 @property (nonatomic, assign, readwrite) CGFloat currentProgressFloat;
 @property (nonatomic, assign, readwrite) CGFloat totalProgressFloat;
+@property (nonatomic, assign, readwrite) BOOL isShowingProgress;
+@property (nonatomic, assign, readwrite) BOOL isCompleted;
 
 @end
 
 @implementation DMSubmitView
 
+#pragma mark - 初始化方法
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    return [self initWithFrame:frame configuration:nil];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame 
+                configuration:(void(^)(DMSubmitView *submitView))configuration {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self commonInit];
+        if (configuration) {
+            configuration(self);
+        }
+        [self setupSubViews];
+    }
+    return self;
+}
+
+- (void)commonInit {
+    _originRect = self.bounds;
+    _viewCenter = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    
+    // 默认值设置
+    _buttonColor = [UIColor colorWithRed:33.0/255.0 green:197.0/255.0 blue:131.0/255.0 alpha:1.0];
+    _borderColor = [UIColor colorWithRed:172.0/255.0 green:172.0/255.0 blue:172.0/255.0 alpha:1.0];
+    _borderWidth = 0.0;
+    _cornerRadius = 0.0;
+    _shadowColor = [UIColor blackColor];
+    _shadowOffset = CGSizeMake(0, 2);
+    _shadowRadius = 4.0;
+    _shadowOpacity = 0.3;
+    
+    _buttonText = @"Submit";
+    _buttonTextColor = [UIColor whiteColor];
+    _buttonTextFont = [UIFont systemFontOfSize:17];
+    _completionText = @"";
+    _completionTextColor = [UIColor whiteColor];
+    
+    _progressColor = [UIColor colorWithRed:33.0/255.0 green:197.0/255.0 blue:131.0/255.0 alpha:1.0];
+    _progressTrackColor = [UIColor colorWithRed:172.0/255.0 green:172.0/255.0 blue:172.0/255.0 alpha:1.0];
+    _progressLineWidth = 3.0;
+    _progressRadius = 0.0;
+    _showsProgressTrack = YES;
+    
+    _scaleAnimationDuration = 1.0;
+    _expandAnimationDuration = 1.0;
+    _animated = YES;
+    
+    _currentProgressFloat = 0.0;
+    _totalProgressFloat = 1.0;
+    _isShowingProgress = NO;
+    _isCompleted = NO;
+}
+
+- (void)setupSubViews {
+    // 创建提交按钮
+    self.submitButton = [DMSubmitButton createSubmitButtonWithFrame:self.bounds configuration:^(DMSubmitButton *button) {
+        button.buttonColor = self.buttonColor;
+        button.borderColor = self.borderColor;
+        button.borderWidth = self.borderWidth;
+        button.cornerRadius = self.cornerRadius;
+        button.shadowColor = self.shadowColor;
+        button.shadowOffset = self.shadowOffset;
+        button.shadowRadius = self.shadowRadius;
+        button.shadowOpacity = self.shadowOpacity;
+    }];
+    
+    [self.submitButton addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.submitButton addTarget:self action:@selector(buttonTouchDown) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:self.submitButton];
+    
+    // 创建显示标签
+    self.showLabel = [DMSubmitLabel createSubmitLabelWithFrame:self.bounds configuration:^(DMSubmitLabel *label) {
+        label.defaultText = self.buttonText;
+        label.defaultTextColor = self.buttonTextColor;
+        label.defaultFont = self.buttonTextFont;
+        label.completionText = self.completionText;
+        label.completionTextColor = self.completionTextColor;
+    }];
+    [self addSubview:self.showLabel];
+}
+
+#pragma mark - 进度控制
+
 - (void)updateProgressViewWitCurrenthData:(CGFloat)currentData totalData:(CGFloat)totalData {
-    if (!_progress) {
+    if (!self.progressView) {
         return;
     }
     
     self.currentProgressFloat = currentData;
     self.totalProgressFloat = totalData;
     
-    [_progress updateProgressViewWitCurrenthData:currentData totalData:totalData];
+    [self.progressView updateProgressViewWitCurrenthData:currentData totalData:totalData];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        _originRect = self.bounds;
-        [self setupSubViews];
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated {
+    if (!self.progressView) {
+        return;
     }
-    return self;
+    
+    [self.progressView setProgress:progress animated:animated];
 }
 
-- (void)setupSubViews {
-    _submitButton = [DMSubmitButton creatSubmitButtonWithFrame:self.bounds];
-    [_submitButton setupSubmitButtonColor:self.submitButtonColor];
-    [_submitButton setupSubmitButtonBoldColor:self.submitBlodColor];
-    [_submitButton addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_submitButton addTarget:self action:@selector(buttonTouchDown) forControlEvents:UIControlEventTouchDown];
-    [self addSubview:_submitButton];
-    
-    _showLabel = [[DMSubmitLabel alloc] initWithFrame:self.bounds];
-    [self addSubview:_showLabel];
+#pragma mark - 外观设置
+
+- (void)setupSubmitViewTitle:(NSString *)title {
+    self.buttonText = title;
+    self.showLabel.defaultText = title;
 }
+
+- (void)setupSubmitViewFont:(UIFont *)font {
+    self.buttonTextFont = font;
+    self.showLabel.defaultFont = font;
+}
+
+- (void)setupSubmitViewTextColor:(UIColor *)textColor {
+    self.buttonTextColor = textColor;
+    self.showLabel.defaultTextColor = textColor;
+}
+
+- (void)setupSubmitViewButtonColor:(UIColor *)buttonColor {
+    self.buttonColor = buttonColor;
+    [self.submitButton setupSubmitButtonColor:buttonColor];
+}
+
+- (void)setupSubmitViewButtonBorderColor:(UIColor *)borderColor {
+    self.borderColor = borderColor;
+    [self.submitButton setupSubmitButtonBorderColor:borderColor];
+}
+
+#pragma mark - 状态控制
+
+- (void)resetToInitialState:(BOOL)animated {
+    // 立即停止所有正在进行的动画
+    [self stopAllAnimations];
+    
+    self.isCompleted = NO;
+    self.isShowingProgress = NO;
+    
+    if (animated) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.submitButton.alpha = 1.0;
+            self.showLabel.alpha = 1.0;
+        }];
+    } else {
+        self.submitButton.alpha = 1.0;
+        self.showLabel.alpha = 1.0;
+    }
+    
+    [self.submitButton setShowSubmitButton];
+    [self.showLabel resetToDefaultState:animated];
+    
+    if (self.progressView) {
+        [self.progressView removeFromSuperview];
+        self.progressView = nil;
+    }
+    
+    // 重置进度值
+    self.currentProgressFloat = 0.0;
+    self.totalProgressFloat = 1.0;
+    
+    // 确保视图状态完全重置
+    self.submitButton.hidden = NO;
+    self.submitButton.alpha = 1.0;
+    self.showLabel.alpha = 1.0;
+}
+
+- (void)triggerCompletion:(BOOL)animated {
+    if (self.isCompleted) return;
+    
+    self.isCompleted = YES;
+    [self expandLayerAnimation];
+    
+    if ([self.delegate respondsToSelector:@selector(submitViewDidComplete)]) {
+        [self.delegate submitViewDidComplete];
+    }
+}
+
+- (void)startShowingProgress:(BOOL)animated {
+    if (self.isShowingProgress) return;
+    
+    self.isShowingProgress = YES;
+    [self drawProgressLayer];
+    
+    if ([self.delegate respondsToSelector:@selector(submitViewStartShowProgressViewStatus)]) {
+        [self.delegate submitViewStartShowProgressViewStatus];
+    }
+}
+
+- (void)stopShowingProgress:(BOOL)animated {
+    if (!self.isShowingProgress) return;
+    
+    self.isShowingProgress = NO;
+    
+    if (self.progressView) {
+        [self.progressView removeFromSuperview];
+        self.progressView = nil;
+    }
+}
+
+#pragma mark - 事件处理
 
 - (void)buttonTouchDown {
-    [_showLabel touchDownAnimation];
+    [self.showLabel touchDownAnimation];
 }
 
 - (void)submitBtnClick:(UIButton *)submitBtn {
+    if ([self.delegate respondsToSelector:@selector(submitViewButtonDidClick)]) {
+        [self.delegate submitViewButtonDidClick];
+    }
     
-    //缩小动画
-    [self scaleLayerAnimtaion];
+    // 缩放动画
+    [self scaleLayerAnimation];
     
     __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        //隐藏按钮
+    [UIView animateWithDuration:self.scaleAnimationDuration 
+                          delay:0.0 
+                        options:UIViewAnimationOptionCurveEaseInOut 
+                     animations:^{
+        // 隐藏标签
         weakSelf.showLabel.alpha = 0;
         [weakSelf.submitButton setHiddenSubmitButton];
-        
     } completion:^(BOOL finished) {
         weakSelf.submitButton.hidden = YES;
-        [weakSelf drawProgressLayer];
-        
-        //call back
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(submitViewStartShowProgressViewStatus)]) {
-            [weakSelf.delegate submitViewStartShowProgressViewStatus];
-        }
+        [weakSelf startShowingProgress:YES];
     }];
 }
 
-- (void)setupSureLayer {
-    self.showLabel.hidden = YES;
-    CAShapeLayer *sureLayer = [CAShapeLayer layer];
-    sureLayer.fillColor = [UIColor whiteColor].CGColor;
-    sureLayer.strokeColor = [UIColor clearColor].CGColor;
+#pragma mark - 动画控制
+
+- (void)stopAllAnimations {
+    // 停止按钮的动画
+    [self.submitButton stopAllAnimations];
     
-    UIBezierPath *newPath = [UIBezierPath bezierPath];
-    [newPath moveToPoint:(CGPoint){_viewCenter.x-5 , _viewCenter.y}];
-    [newPath addLineToPoint:CGPointMake(_viewCenter.x, _viewCenter.y + 5)];
-    [newPath addLineToPoint:CGPointMake(_viewCenter.x+10, _viewCenter.y -5)];
+    // 停止进度环的动画
+    if (self.progressView) {
+        [self.progressView stopAllAnimations];
+    }
     
-    sureLayer.path = newPath.CGPath;
-    [self.submitButton.layer addSublayer:sureLayer];
+    // 停止标签的动画
+    [self.showLabel stopAllAnimations];
     
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 1.0;
-    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    pathAnimation.fromValue = [NSNumber numberWithFloat:0.0];
-    pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
+    // 重置按钮的bounds到原始状态
+    self.submitButton.layer.bounds = _originRect;
+    self.submitButton.frame = _originRect;
     
-    [sureLayer addAnimation:pathAnimation forKey:nil];
+    // 确保按钮可见
+    self.submitButton.hidden = NO;
+    self.submitButton.alpha = 1.0;
 }
 
-//进度环动画
-- (void)drawProgressLayer {
-    _viewCenter = (CGPoint){self.bounds.size.width/2, self.bounds.size.height/2};
-    
-    CGFloat layerWith = 3.0;
-    CGFloat progressRadius = self.bounds.size.height/2;
-    CGFloat progressX = self.bounds.size.width/2-progressRadius-layerWith;
-    CGFloat progressWH = self.bounds.size.height + 2*layerWith;
-    CGRect progressFrame = (CGRect){{progressX, -layerWith}, {progressWH, progressWH}};
-    
-    //创建一个进度环view
-    self.progress = [[DMProgressView alloc] initWithProgressViewWithFrame:progressFrame timeout:INTMAX_MAX radius:progressRadius layerWith:layerWith];
-    self.progress.delegate = self;
-    
-    [self addSubview:self.progress];
-}
+#pragma mark - 动画方法
 
-
-//扩充动画
-- (void)expandLayerAnimation {
-    [_progress removeFromSuperview];
-    [_submitButton setShowSubmitButton];
-    [_showLabel showLabelAnimation];
-    
-    CABasicAnimation *anima = [CABasicAnimation animation];
-    anima.duration = 1.;
-    anima.keyPath = @"bounds";
-    anima.toValue = [NSValue valueWithCGRect:_originRect];
-    anima.removedOnCompletion = NO;
-    anima.fillMode = kCAFillModeForwards;
-    [self.submitButton.layer addAnimation:anima forKey:nil];
-}
-
-//缩放动画
-- (void)scaleLayerAnimtaion {
+- (void)scaleLayerAnimation {
     CABasicAnimation *anima = [CABasicAnimation animation];
     anima.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    anima.duration = 1.;
+    anima.duration = self.scaleAnimationDuration;
     anima.keyPath = @"bounds";
     anima.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, _originRect.size.height, _originRect.size.height)];
     anima.removedOnCompletion = NO;
@@ -161,53 +294,170 @@
     [self.submitButton.layer addAnimation:anima forKey:nil];
 }
 
-
-#pragma mark - Private mothods
-
-- (void)setupSubmitViewTitle:(NSString *)title {
-    _showLabel.text = title;
+- (void)expandLayerAnimation {
+    [self.progressView removeFromSuperview];
+    [self.submitButton setShowSubmitButton];
+    [self.showLabel showCompletionAnimation:^{
+        // 完成动画后的回调
+    }];
+    
+    CABasicAnimation *anima = [CABasicAnimation animation];
+    anima.duration = self.expandAnimationDuration;
+    anima.keyPath = @"bounds";
+    anima.toValue = [NSValue valueWithCGRect:_originRect];
+    anima.removedOnCompletion = NO;
+    anima.fillMode = kCAFillModeForwards;
+    [self.submitButton.layer addAnimation:anima forKey:nil];
 }
 
-- (void)setupSubmitViewFont:(UIFont *)font {
-    _showLabel.font = font;
+- (void)drawProgressLayer {
+    _viewCenter = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    
+    CGFloat layerWidth = self.progressLineWidth;
+    CGFloat progressRadius = self.progressRadius > 0 ? self.progressRadius : self.bounds.size.height / 2;
+    CGFloat progressX = self.bounds.size.width / 2 - progressRadius - layerWidth;
+    CGFloat progressWH = self.bounds.size.height + 2 * layerWidth;
+    CGRect progressFrame = CGRectMake(progressX, -layerWidth, progressWH, progressWH);
+    
+    // 创建进度环视图
+    self.progressView = [[DMProgressView alloc] initWithFrame:progressFrame configuration:^(DMProgressView *progressView) {
+        progressView.radius = progressRadius;
+        progressView.lineWidth = layerWidth;
+        progressView.progressColor = self.progressColor;
+        progressView.trackColor = self.progressTrackColor;
+        progressView.showsTrack = self.showsProgressTrack;
+        progressView.animationDuration = 0.3;
+        progressView.delegate = self;
+    }];
+    
+    [self addSubview:self.progressView];
 }
 
-- (void)setupSubmitViewTextColor:(UIColor *)textColor {
-    _showLabel.textColor = textColor;
-}
-
-- (void)setupSubmitViewButtonColor:(UIColor *)buttonColor {
-    _submitButtonColor = buttonColor;
-    [_submitButton setupSubmitButtonColor:buttonColor];
-}
-
-- (void)setupSubmitViewButtonBlodColor:(UIColor *)blodColor {
-    _submitBlodColor = blodColor;
-    [_submitButton setupSubmitButtonBoldColor:blodColor];
-}
-
-
-#pragma mark - ProgressViewDelegate
+#pragma mark - DMProgressViewDelegate
 
 - (void)progressViewCompletionCallBack {
-    [self expandLayerAnimation];
+    [self triggerCompletion:YES];
 }
 
-
-#pragma mark - Getter
-
-- (UIColor *)submitButtonColor {
-    if (!_submitButtonColor) {
-        _submitButtonColor = btnColor;
+- (void)progressViewDidUpdateProgress:(CGFloat)progress {
+    if ([self.delegate respondsToSelector:@selector(submitViewDidUpdateProgress:)]) {
+        [self.delegate submitViewDidUpdateProgress:progress];
     }
-    return _submitButtonColor;
 }
 
-- (UIColor *)submitBlodColor {
-    if (!_submitBlodColor) {
-        _submitBlodColor = changedBgColor;
+#pragma mark - 属性设置
+
+- (void)setButtonColor:(UIColor *)buttonColor {
+    _buttonColor = buttonColor;
+    [self.submitButton setupSubmitButtonColor:buttonColor];
+}
+
+- (void)setBorderColor:(UIColor *)borderColor {
+    _borderColor = borderColor;
+    [self.submitButton setupSubmitButtonBorderColor:borderColor];
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth {
+    _borderWidth = borderWidth;
+    self.submitButton.borderWidth = borderWidth;
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+    _cornerRadius = cornerRadius;
+    self.submitButton.cornerRadius = cornerRadius;
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+    _shadowColor = shadowColor;
+    self.submitButton.shadowColor = shadowColor;
+}
+
+- (void)setShadowOffset:(CGSize)shadowOffset {
+    _shadowOffset = shadowOffset;
+    self.submitButton.shadowOffset = shadowOffset;
+}
+
+- (void)setShadowRadius:(CGFloat)shadowRadius {
+    _shadowRadius = shadowRadius;
+    self.submitButton.shadowRadius = shadowRadius;
+}
+
+- (void)setShadowOpacity:(CGFloat)shadowOpacity {
+    _shadowOpacity = shadowOpacity;
+    self.submitButton.shadowOpacity = shadowOpacity;
+}
+
+- (void)setButtonText:(NSString *)buttonText {
+    _buttonText = buttonText;
+    self.showLabel.defaultText = buttonText;
+}
+
+- (void)setButtonTextColor:(UIColor *)buttonTextColor {
+    _buttonTextColor = buttonTextColor;
+    self.showLabel.defaultTextColor = buttonTextColor;
+}
+
+- (void)setButtonTextFont:(UIFont *)buttonTextFont {
+    _buttonTextFont = buttonTextFont;
+    self.showLabel.defaultFont = buttonTextFont;
+}
+
+- (void)setCompletionText:(NSString *)completionText {
+    _completionText = completionText;
+    self.showLabel.completionText = completionText;
+}
+
+- (void)setCompletionTextColor:(UIColor *)completionTextColor {
+    _completionTextColor = completionTextColor;
+    self.showLabel.completionTextColor = completionTextColor;
+}
+
+- (void)setProgressColor:(UIColor *)progressColor {
+    _progressColor = progressColor;
+    self.progressView.progressColor = progressColor;
+}
+
+- (void)setProgressTrackColor:(UIColor *)progressTrackColor {
+    _progressTrackColor = progressTrackColor;
+    self.progressView.trackColor = progressTrackColor;
+}
+
+- (void)setProgressLineWidth:(CGFloat)progressLineWidth {
+    _progressLineWidth = progressLineWidth;
+    self.progressView.lineWidth = progressLineWidth;
+}
+
+- (void)setProgressRadius:(CGFloat)progressRadius {
+    _progressRadius = progressRadius;
+    self.progressView.radius = progressRadius;
+}
+
+- (void)setShowsProgressTrack:(BOOL)showsProgressTrack {
+    _showsProgressTrack = showsProgressTrack;
+    self.progressView.showsTrack = showsProgressTrack;
+}
+
+#pragma mark - 布局
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    _originRect = self.bounds;
+    _viewCenter = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    
+    // 更新子视图frame
+    self.submitButton.frame = self.bounds;
+    self.showLabel.frame = self.bounds;
+    
+    // 更新进度环位置
+    if (self.progressView) {
+        CGFloat layerWidth = self.progressLineWidth;
+        CGFloat progressRadius = self.progressRadius > 0 ? self.progressRadius : self.bounds.size.height / 2;
+        CGFloat progressX = self.bounds.size.width / 2 - progressRadius - layerWidth;
+        CGFloat progressWH = self.bounds.size.height + 2 * layerWidth;
+        CGRect progressFrame = CGRectMake(progressX, -layerWidth, progressWH, progressWH);
+        self.progressView.frame = progressFrame;
     }
-    return _submitBlodColor;
 }
 
 @end
