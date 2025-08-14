@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "DMSubmitView"
-  s.version      = "0.0.3"
+  s.version      = "2.0.0"
   s.summary      = "A progress Hud view for submit animation"
 
   # This description is used to generate tags and improve search results.
