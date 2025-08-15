@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "DMSubmitView"
-  s.version      = "2.0.0"
+  s.version      = "2.0.1"
   s.summary      = "A progress Hud view for submit animation"
 
   # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
 					  一个提交类型的hud view 动画
                    DESC
 
-  s.homepage     = "https://github.com/DMDavid"
+  s.homepage     = "https://github.com/MortyDo0818/DMSubmitView"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/DMDavid/SubmitView.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/MortyDo0818/DMSubmitView.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -93,7 +93,7 @@ Pod::Spec.new do |s|
 
   s.source_files  = 'SubmitView/SubmitView/SubmitView/*.{h,m}'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '15.0'
 
   # s.public_header_files = "Classes/**/*.h"
 
